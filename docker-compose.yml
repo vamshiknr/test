@@ -32,16 +32,4 @@ services:
     links:
       - memcached
 
-  composer:
-    image: "composer"
-    volumes:
-      - "./web:/app"
-      - ~/.ssh:/root/.ssh:ro
-    command: install
-    env_file:
-      - ".env"
 
-  memcached:
-    image: memcached:1.4.22
-    ports:
-      - "11211:11211"
