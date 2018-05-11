@@ -24,6 +24,8 @@ info 'Killing Docker Containers..'
 docker rm -f $(docker ps -a -q) &>/dev/null
 success "OK"
 
+info 'Test'
+
 info 'Building Docker Containers..'
 docker-compose up -d
 
