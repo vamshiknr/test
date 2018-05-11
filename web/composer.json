@@ -1,0 +1,32 @@
+{
+    "name": "oneiota/jd-websites",
+    "authors": [{
+        "name": "OneIota",
+        "email": "tech@oneiota.co.uk"
+    }],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [{
+            "type": "vcs",
+            "url": "https://bitbucket.org/oneiota/log"
+        },
+        {
+            "type": "vcs",
+            "url": "ssh://git@bitbucket.org/oneiota/website-app"
+        },
+        {
+            "type": "vcs",
+            "url": "ssh://git@bitbucket.org/oneiota/website-core"
+        },
+        {
+            "type": "vcs",
+            "url": "ssh://git@bitbucket.org/oneiota/bazaarvoice-sdk"
+        }
+    ],
+    "require": {
+        "oneiota/website-app": "~0.17.1"
+    },
+    "scripts": {
+        "post-install-cmd": "oneiota\\websiteFramework\\app\\lib\\version\\VersionInfo::getVersions"
+    }
+}

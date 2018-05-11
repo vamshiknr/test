@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  web:
+    image: nginx:alpine
+    volumes:
+      - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./etc/nginx/default.template.conf:/etc/nginx/conf.d/default.template"
+      - "./web:/var/www/html/public"
+    ports:
+      - "8000:80"
+      - "3000:443"
+    environment:
+      - NGINX_HOST=${NGINX_HOST}
+    command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    restart: always
+    depends_on:
+      - php
+      - memcached
+    links:
+      - memcached
+
+  php:
+    #image: nanoninja/php-fpm:5.6
+    image: framework-php:1.0
+    restart: always
+    env_file:
+      - ".env"
+    volumes:
+      - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+      - "./web/:/var/www/html/public"
+    links:
+      - memcached
+
+  composer:
+    image: "composer"
+    volumes:
+      - "./web:/app"
+      - ~/.ssh:/root/.ssh:ro
+    command: install
+    env_file:
+      - ".env"
+
+  memcached:
+    image: memcached:1.4.22
+    ports:
+      - "11211:11211"
