@@ -1,5 +1,4 @@
 #!/bin/bash
-echo 'test'
 echo 'Please hold, starting up the containers.....'
 docker rm -f `docker ps -a --format "{{.ID}}"` &>/dev/null
 docker-compose up -d --no-recreate &>/dev/null
